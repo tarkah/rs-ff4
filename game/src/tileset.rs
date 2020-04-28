@@ -147,6 +147,7 @@ impl TriggerKind {
     }
 }
 
+#[derive(Debug)]
 pub struct Cell {
     index: u8,
     kind: TextureKind,
@@ -408,5 +409,11 @@ pub fn load<P: AsRef<Path>>(path: P, map_filename: &str, set_name: &str) -> Resu
 
     file.read_to_end(&mut buffer)?;
 
-    Ok(Tileset::load(texture, &buffer))
+    let tileset = Tileset::load(texture, &buffer);
+
+    for layer in tileset.layers.iter() {
+        println!("{:?}",&layer.cells);
+    }
+
+    Ok(tileset)
 }
